@@ -18,10 +18,11 @@ function expressionCalculator(str) {
 
     for (let i = 0; i < arr.length; i++) {
         if (arr[i] === '(' || arr[i] === ')') arrBrackets.push(arr[i])
-        if (arrBrackets[0] === ')') return false;
+        
+        if (arrBrackets[0] === ')') throw new Error('ExpressionError: Brackets must be paired')
     }
 
-    if (arrBrackets.length % 2 === 1) return false
+    if (arrBrackets.length % 2 === 1) throw new Error('ExpressionError: Brackets must be paired')
     
     if (arrBrackets.length !== 0) { 
      
@@ -34,7 +35,7 @@ function expressionCalculator(str) {
 
     	}
 
-	if (arrCheck.length !== 0) return false
+	if (arrCheck.length !== 0) throw new Error('ExpressionError: Brackets must be paired')
 
     }
 
@@ -43,8 +44,13 @@ function expressionCalculator(str) {
     // Calc---------------------------------
     
     function calc(a, op, b) {
+        if (isNaN(a) || isNaN(a)) throw new Error('ExpressionError: Brackets must be paired')
+        
         if (op === '*') return (+a * +b)
-        if (op === '/') return (+a / +b)
+        if (op === '/') {
+            if (+b === 0) throw new Error('TypeError: Division by zero.')
+            return (+a / +b) 
+        }
         if (op === '+') return (+a + +b)
         if (op === '-') return (+a - +b)
     }
